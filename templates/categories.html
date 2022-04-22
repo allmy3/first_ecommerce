@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Категории продуктов{% endblock title %}
+
+{% block content %}
+
+{% for category in categories %}
+	<div class="dropdown mb-3" style="display: inline-block;">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    {{category.name}}
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    {% for pod_category in category.pod.all %}
+    	<li><a class="dropdown-item" href="#">{{pod_category.name}}</a></li>
+    {% empty %}
+    	<li><a class="dropdown-item">Еще нет под-категорий</a></li>
+    {% endfor %}
+  </ul>
+</div>
+{% endfor %}
+
+{% endblock content %}

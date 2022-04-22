@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}{{product.title}}{% endblock title %}
+
+{% block content %}
+
+  <h3 class="product__title">{{product.title}} <span class="badge bg-secondary">{{product.get_product_type_label_display}}</span></h3>
+
+  {% if product.image_content != None %}<div class="block__for_images"></div>{% endif %}
+
+  <div class="discount_price__and_price" style="display: inline-block;">
+    <h4>{{product.price}} {% if product.discount_price != product.price %} | <span><strike>{{product.discount_price}}</strike></span>{% endif %} RUB</h4>
+  </div>
+
+  <div class="image__block">
+    {% for image_content in product.image_content.all %}
+      <img src="{{image_content.image.url}}" width="250" height="250">
+    {% endfor %}
+  </div>
+
+  <div class="description">
+    <h2>Описание продукта</h2>
+    {{product.description}}
+  </div>
+
+  {% if user.is_authenticated %}
+  <div class="buttons mt-2" style="display: inline-block;">
+    {% if at_cart == False %}
+    <a href="{% url 'add_to_cart' product.pk %}" class="btn btn-primary">Добавить в корзину</a>
+    {% else %}
+    <a href="{% url 'remove_from_cart' product.pk %}" class="btn btn-danger">Убрать из корзины</a>
+    <a href="{% url 'add_to_cart' product.pk %}" class="btn btn-primary">+ кол-во</a>
+    {% endif %}
+    <a href="{% url 'add_to_fav' product.pk %}" class="btn btn-warning">Добавить / убрать в / из избранное(ых)</a>
+  </div>
+  {% endif %}
+
+{% endblock content %}

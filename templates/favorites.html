@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Избранные{% endblock title %}
+
+{% block content %}
+
+	<h3>Продукты - Избранные</h3>
+
+	{% for product in user_fav.fav_products.all %}
+	<div class="card mt-3 mb-3" style="width: 18rem; display: inline-block;">
+    {% if product.poster %}
+  <img src="{{product.poster.url}}" class="card-img-top" alt="...">{% endif %}
+  <div class="card-body">
+    <h5 class="card-title">{{product.title}}</h5>
+    <p class="card-text">{{product.description|truncatechars:50}}</p>
+    <p>{{product.price}} RUB</p>
+    <a href="{% url 'product' product.pk %}" class="btn btn-outline-dark">Детальней</a>
+  </div>
+</div>
+{% empty %}
+У вас еще нет избранных продуктов
+	{% endfor %}
+
+
+{% endblock content %}
